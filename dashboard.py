@@ -258,7 +258,8 @@ def inyectar_css():
     div[data-testid="stSidebar"] * { color: white !important; }
     .block-container { padding-top: 1.5rem; }
     h1 { color: #1B2A6B !important; }
-    button[data-baseweb="tab"] p { font-size: 18px !important; font-weight: 600 !important; }
+    button[data-baseweb="tab"] { padding: 12px 24px !important; }
+    button[data-baseweb="tab"] p { font-size: 22px !important; font-weight: 700 !important; letter-spacing: 0.5px !important; }
     h3 { color: #333 !important; border-bottom: 2px solid #A91E2C; padding-bottom: 4px; }
     </style>""", unsafe_allow_html=True)
 
