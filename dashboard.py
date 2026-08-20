@@ -258,8 +258,8 @@ def inyectar_css():
     div[data-testid="stSidebar"] * { color: white !important; }
     .block-container { padding-top: 1.5rem; }
     h1 { color: #1B2A6B !important; }
-    button[data-baseweb="tab"] { padding: 12px 24px !important; }
-    button[data-baseweb="tab"] p { font-size: 22px !important; font-weight: 700 !important; letter-spacing: 0.5px !important; }
+    
+    div[role="radiogroup"] label { font-size: 20px !important; font-weight: 600 !important; padding: 8px 20px !important; background: #1B2A6B !important; color: white !important; border-radius: 8px !important; margin-right: 10px !important; }
     h3 { color: #333 !important; border-bottom: 2px solid #A91E2C; padding-bottom: 4px; }
     </style>""", unsafe_allow_html=True)
 
@@ -283,12 +283,12 @@ with st.sidebar:
     st.caption("Auto-refresco cada 15 min")
 
 # ── Tabs principales ──
-tab_tickets, tab_mdm = st.tabs(["🎫 Tickets", "📱 Dispositivos / MDM"])
+seccion = st.radio("", ["🎫 Tickets", "📱 Dispositivos / MDM"], horizontal=True, label_visibility="collapsed")
 
 # ══════════════════════════════════════════════════
 #              TAB 1: TICKETS
 # ══════════════════════════════════════════════════
-with tab_tickets:
+if seccion == "🎫 Tickets":
     df_raw = cargar_datos()
 
     # Filtros inline
@@ -456,7 +456,7 @@ with tab_tickets:
 # ══════════════════════════════════════════════════
 #              TAB 2: DISPOSITIVOS / MDM
 # ══════════════════════════════════════════════════
-with tab_mdm:
+if seccion == "📱 Dispositivos / MDM":
     dv = cargar_dispositivos()
 
     st.title("📱 Inventario de Dispositivos & MDM")
