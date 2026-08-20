@@ -259,7 +259,7 @@ def inyectar_css():
     .block-container { padding-top: 1.5rem; }
     h1 { color: #1B2A6B !important; }
     
-    div[role="radiogroup"] label { font-size: 20px !important; font-weight: 600 !important; padding: 8px 20px !important; background: #1B2A6B !important; color: white !important; border-radius: 8px !important; margin-right: 10px !important; }
+    
     h3 { color: #333 !important; border-bottom: 2px solid #A91E2C; padding-bottom: 4px; }
     </style>""", unsafe_allow_html=True)
 
@@ -281,9 +281,11 @@ with st.sidebar:
     st.markdown("---")
     st.caption(f"Última carga: {time.strftime('%H:%M:%S')}")
     st.caption("Auto-refresco cada 15 min")
+    st.markdown("---")
+    seccion = st.selectbox("📌 Sección", ["🎫 Tickets", "📱 Dispositivos / MDM"])
 
 # ── Tabs principales ──
-seccion = st.radio("", ["🎫 Tickets", "📱 Dispositivos / MDM"], horizontal=True, label_visibility="collapsed")
+
 
 # ══════════════════════════════════════════════════
 #              TAB 1: TICKETS
