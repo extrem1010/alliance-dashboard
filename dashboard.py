@@ -293,27 +293,23 @@ with st.sidebar:
 if seccion == "🎫 Tickets":
     df_raw = cargar_datos()
 
-    # Filtros inline
-    with st.expander("🔍 Filtros", expanded=False):
-        fc1, fc2, fc3, fc4 = st.columns(4)
-        with fc1:
-            if not df_raw["Creado"].dropna().empty:
-                min_date = df_raw["Creado"].min().date()
-                max_date = df_raw["Creado"].max().date()
-            else:
-                min_date = datetime.now().date() - timedelta(days=90)
-                max_date = datetime.now().date()
-            rango = st.date_input("Rango de fechas", value=(min_date, max_date),
-                                  min_value=min_date, max_value=max_date, key="t_rango")
-        with fc2:
-            tecnicos = ["Todos"] + sorted(df_raw["Técnico"].unique().tolist())
-            sel_tec = st.selectbox("Técnico", tecnicos, key="t_tec")
-        with fc3:
-            categorias_list = ["Todas"] + sorted(df_raw["Tipo"].unique().tolist())
-            sel_cat = st.selectbox("Categoría", categorias_list, key="t_cat")
-        with fc4:
-            estados = ["Todos"] + sorted(df_raw["Estado"].unique().tolist())
-            sel_est = st.selectbox("Estado", estados, key="t_est")
+    # Filtros en sidebar
+    with st.sidebar:
+        st.subheader("🔍 Filtros Tickets")
+        if not df_raw["Creado"].dropna().empty:
+            min_date = df_raw["Creado"].min().date()
+            max_date = df_raw["Creado"].max().date()
+        else:
+            min_date = datetime.now().date() - timedelta(days=90)
+            max_date = datetime.now().date()
+        rango = st.date_input("Rango de fechas", value=(min_date, max_date),
+                              min_value=min_date, max_value=max_date, key="t_rango")
+        tecnicos = ["Todos"] + sorted(df_raw["Técnico"].unique().tolist())
+        sel_tec = st.selectbox("Técnico", tecnicos, key="t_tec")
+        categorias_list = ["Todas"] + sorted(df_raw["Tipo"].unique().tolist())
+        sel_cat = st.selectbox("Categoría", categorias_list, key="t_cat")
+        estados = ["Todos"] + sorted(df_raw["Estado"].unique().tolist())
+        sel_est = st.selectbox("Estado", estados, key="t_est")
 
     # Aplicar filtros
     df = df_raw.copy()
@@ -467,17 +463,14 @@ if seccion == "📱 Dispositivos / MDM":
         st.warning("No se pudieron obtener dispositivos de la API. Verifica que tu app OAuth tenga scope 'monitoring'.")
         st.stop()
 
-    # Filtros MDM
-    with st.expander("🔍 Filtros", expanded=False):
-        mf1, mf2, mf3 = st.columns(3)
-        with mf1:
-            tipos_disp = ["Todos"] + sorted(dv["Tipo"].unique().tolist())
-            sel_tipo_d = st.selectbox("Tipo de dispositivo", tipos_disp, key="m_tipo")
-        with mf2:
-            orgs = ["Todas"] + sorted([o for o in dv["Organización"].unique() if o])
-            sel_org = st.selectbox("Organización", orgs, key="m_org")
-        with mf3:
-            sel_status = st.selectbox("Estado", ["Todos", "Online", "Offline"], key="m_status")
+    # Filtros MDM en sidebar
+    with st.sidebar:
+        st.subheader("🔍 Filtros MDM")
+        tipos_disp = ["Todos"] + sorted(dv["Tipo"].unique().tolist())
+        sel_tipo_d = st.selectbox("Tipo de dispositivo", tipos_disp, key="m_tipo")
+        orgs = ["Todas"] + sorted([o for o in dv["Organización"].unique() if o])
+        sel_org = st.selectbox("Organización", orgs, key="m_org")
+        sel_status = st.selectbox("Estado", ["Todos", "Online", "Offline"], key="m_status")
 
     # Aplicar filtros
     dv_f = dv.copy()
